@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-body">Basic card</div>
+                <form action="/generate" method="POST">
+                    <div class="form-group">
+                        <label for="">System Role</label>
+                        <input type="text" name="system_prompt" class="form-control" value="You are a tutor who is an expert in C programming and have conceptual understanding on anything about programming. Follow the marker for writing response.">
+                
+                        <label for="">User Role</label>
+                        <input type="text" class="form-control" name="user_prompt">
+                
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+          </div>
+        </div>
+
+    </div>
+    
+</body>
+</html>

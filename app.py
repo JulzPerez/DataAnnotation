@@ -5,7 +5,6 @@ import openai
 import os
 import pandas as pd
 
-import json
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
@@ -215,4 +214,4 @@ def get_statement():
 
 if __name__ == '__main__':
     db.create_all()
-    app.run()
+    app.run(host='0.0.0.0')

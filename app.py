@@ -13,11 +13,13 @@ app = Flask(__name__)
 app.config.from_pyfile('config.py')
 app.config['SECRET_KEY'] = 'mysecretkey'
 
-if not app.debug:
+if app.debug is not True:   
     import logging
-    from logging import FileHandler
-    file_handler = FileHandler(app.config['LOG_FILE'])
-    #file_handler.setLevel(logging.ERROR)
+    from logging.handlers import RotatingFileHandler
+    file_handler = RotatingFileHandler('python.log', maxBytes=1024 * 1024 * 100, backupCount=20)
+    file_handler.setLevel(logging.ERROR)
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    file_handler.setFormatter(formatter)
     app.logger.addHandler(file_handler)
 
 

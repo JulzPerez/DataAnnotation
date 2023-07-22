@@ -58,7 +58,6 @@ def internal_error(exception):
 
 @app.route('/', methods=['GET'])
 def instruction():
-    X = "A" + 1
 
     if request.method == "GET":
         users = User.query.all()

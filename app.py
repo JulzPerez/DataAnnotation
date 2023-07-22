@@ -12,10 +12,14 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 app.config['SECRET_KEY'] = 'mysecretkey'
-app.debug = True
 
-file_handler = FileHandler('errorlog.txt')
-file_handler.setLevel(WARNING)
+if not app.debug:
+    import logging
+    from logging import FileHandler
+    file_handler = FileHandler(app.config['LOG_FILE'])
+    #file_handler.setLevel(logging.ERROR)
+    app.logger.addHandler(file_handler)
+
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -45,9 +49,14 @@ class UserResponse(db.Model):
     ans_style_3 = db.Column(db.Text,nullable=False)
     ans_style_4 = db.Column(db.Text,nullable=False)
 
+@app.errorhandler(500)
+def internal_error(exception):
+    app.logger.error(exception)
+    return render_template('500.html'), 500
 
 @app.route('/', methods=['GET'])
 def instruction():
+    X = "A" + 1
 
     if request.method == "GET":
         users = User.query.all()

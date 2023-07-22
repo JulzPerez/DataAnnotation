@@ -12,6 +12,8 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 app.config['SECRET_KEY'] = 'mysecretkey'
+app.debug = True
+
 file_handler = FileHandler('errorlog.txt')
 file_handler.setLevel(WARNING)
 
@@ -217,4 +219,4 @@ def get_statement():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.p')

@@ -49,6 +49,7 @@ def instruction():
 
     if request.method == "GET":
         users = User.query.all()
+        print(users)
         return render_template('instruction.html', users=users)
 
 @app.route('/survey', methods=['GET', 'POST'])

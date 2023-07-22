@@ -69,15 +69,16 @@
     <nav class="navbar navbar-dark bg-info">
         <input id="user_id" name="user_id" type="text" value="{{user_id}}" hidden>
         <a class="navbar-brand" href="#">GPT</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
         <div>
             <button class="btn btn-warning" id="btnResetChoices" onclick="resetRadBtnChoices()">Reset Choices</button>
            
             <a href="/done" class="btn btn-secondary float-right" id="done-button">Done</a>
         </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+       
     </nav>
 
     <form action="/survey" method="POST">
@@ -87,7 +88,10 @@
             <div class="jumbotron">Assertion No.: 
                {{data.statement_id}}
                 <input id="st-num" type="text" name="st_num" value="{{data.statement_id}}" hidden>
+                
+                {% autoescape false %}
                 <p id="assertion-text">{{ data.statement_text }}</p>
+                {% endautoescape %}
                 
             </div>
                 
@@ -106,7 +110,10 @@
                         <div class="row">
                             <div class="col-md-8">
                                 Question:
-                            <p id="question-text" style="font-size:16px">{{data.question}}</p>
+                            
+                            {% autoescape false %}
+                                <p id="question-text" style="font-size:16px">{{data.question}}</p>
+                            {% endautoescape %}
                             </div>
                             <div class="col-md-4">
                                 <label for="">Rank1: </label><input type="text"  size="6" disabled>
@@ -127,9 +134,12 @@
                                     <table class="table table-condensed table-hover">
             
                                         <tr>
-                                            <td>1</td>
+                                            <td>[1]</td>
                                             <td>
-                                                {{data.ans_style_1}}
+                                                {% autoescape false %}
+                                                    <p id="question-text" style="font-size:16px">{{data.ans_style_1}}</p>
+                                                {% endautoescape %}
+                                                
                                             </td>
                                             
                                             <td>
@@ -144,9 +154,11 @@
                                         </tr>
 
                                         <tr>
-                                            <td>2</td>
+                                            <td>[2]</td>
                                             <td>
-                                                {{data.ans_style_2}}
+                                                {% autoescape false %}
+                                                <p>{{data.ans_style_2}}</p>
+                                                {% endautoescape %}
                                             </td>
                                             
                                             <td>
@@ -160,9 +172,11 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>3</td>
+                                            <td>[3]</td>
                                             <td>
-                                                {{data.ans_style_3}}
+                                                {% autoescape false %}
+                                                <p>{{data.ans_style_3}}</p>
+                                                {% endautoescape %}
                                             </td>
                                             
                                             <td>
@@ -176,9 +190,11 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>4</td>
+                                            <td>[4]</td>
                                             <td>
-                                                {{data.ans_style_4}}
+                                                {% autoescape false %}
+                                                <p>{{data.ans_style_4}}</p>
+                                                {% endautoescape %}
                                             </td>
                                             
                                             <td>
@@ -229,9 +245,11 @@
     <script>
         $(document).ready(function() {
 
+            document.getElementById("btnResetChoices").addEventListener("click", resetRadBtnChoices);
+
             console.log("Survey Page is loaded")
 
-            const options = []
+            var options = []
 
             $("#next-button").click(function(event){
                
@@ -244,6 +262,7 @@
                 }   
 
             });
+            
 
             $('input[type=radio][name=style1_btn]').change(function() {
                 myvar = $('input[name="style1_btn"]:checked').val();
@@ -299,13 +318,16 @@
             });
 
             function resetRadBtnChoices(){
+               
                 $('input[name="style1_btn"]:checked').prop('checked', false); 
                 $('input[name="style2_btn"]:checked').prop('checked', false); 
                 $('input[name="style3_btn"]:checked').prop('checked', false); 
-                $('input[name="style4_btn"]:checked').prop('checked', false); 
-
-                location.reload()
-                alert("reloaded")
+                $('input[name="style4_btn"]:checked').prop('checked', false);   
+                
+                while(options.length > 0) {
+                    options.pop();
+                }
+        
             }
 
             function showLoading() {

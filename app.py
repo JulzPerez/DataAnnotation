@@ -63,6 +63,9 @@ def instruction():
         users = User.query.all()
         print(users)
         return render_template('instruction.html', users=users)
+    
+
+   
 
 @app.route('/survey', methods=['GET', 'POST'])
 def survey():
@@ -73,15 +76,49 @@ def survey():
         session['user_id'] = user_id
 
         data = get_statement()
+        st_id = data['statement_id']
+        st_text = data['statement_text'].replace('\n','<br>')
+        st_question = data['question'].replace('\n','<br>')
+        st_ans_style_1 = data['ans_style_1'].replace('\n','<br>')
+        st_ans_style_2 = data['ans_style_2'].replace('\n','<br>')
+        st_ans_style_3 = data['ans_style_3'].replace('\n','<br>')
+        st_ans_style_4 = data['ans_style_4'].replace('\n','<br>')
 
-        return render_template("survey.html", data=data)
+        dataDict= {
+           'statement_id' : st_id,
+           'statement_text' : st_text,
+           'question' : st_question,
+           'ans_style_1': st_ans_style_1,
+           'ans_style_2' : st_ans_style_2,
+           'ans_style_3' : st_ans_style_3,
+           'ans_style_4' : st_ans_style_4
+        }
+
+        return render_template("survey.html", data=dataDict)
     
     elif request.method == "POST":
         res = store_response()
 
         if res == "SUCCESS":
             data = get_statement()
-            return render_template("survey.html", data=data)
+            st_id = data['statement_id']
+            st_text = data['statement_text'].replace('\n','<br>')
+            st_question = data['question'].replace('\n','<br>')
+            st_ans_style_1 = data['ans_style_1'].replace('\n','<br>')
+            st_ans_style_2 = data['ans_style_2'].replace('\n','<br>')
+            st_ans_style_3 = data['ans_style_3'].replace('\n','<br>')
+            st_ans_style_4 = data['ans_style_4'].replace('\n','<br>')
+
+            dataDict= {
+            'statement_id' : st_id,
+            'statement_text' : st_text,
+            'question' : st_question,
+            'ans_style_1': st_ans_style_1,
+            'ans_style_2' : st_ans_style_2,
+            'ans_style_3' : st_ans_style_3,
+            'ans_style_4' : st_ans_style_4
+            }
+            return render_template("survey.html", data=dataDict)
         else:
             flash("Error saving data!")
 

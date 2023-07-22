@@ -12,3 +12,17 @@ Traceback (most recent call last):
     X = "A" + 1
 TypeError: can only concatenate str (not "int") to str
 2023-07-22 11:56:59,292 - app - ERROR - 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2023-07-22 13:36:13,780 - app - ERROR - Exception on /survey [GET]
+Traceback (most recent call last):
+  File "/Users/julietoperez/anaconda3/lib/python3.10/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/julietoperez/anaconda3/lib/python3.10/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/julietoperez/anaconda3/lib/python3.10/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/julietoperez/anaconda3/lib/python3.10/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/julietoperez/Documents/projects/surve_app/app.py", line 76, in survey
+    st_text = data.statement_text
+AttributeError: 'dict' object has no attribute 'statement_text'
+2023-07-22 13:36:13,782 - app - ERROR - 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.

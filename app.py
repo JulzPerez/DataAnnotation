@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for,flash
+from logging import FileHandler,WARNING
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import openai
@@ -11,6 +12,8 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 app.config['SECRET_KEY'] = 'mysecretkey'
+file_handler = FileHandler('errorlog.txt')
+file_handler.setLevel(WARNING)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
